@@ -9,8 +9,8 @@ const Table = ({
   renderRow,
 }: {
   columns: Columns[];
-  data: Teacher[];
-  renderRow: (teacher: Teacher) => React.ReactNode;
+  data: any[];
+  renderRow: (item: any) => React.ReactNode;
 }) => {
   return (
     <table className="w-full mt-4">
