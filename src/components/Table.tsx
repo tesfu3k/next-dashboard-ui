@@ -1,0 +1,62 @@
+import { Teacher } from "@/app/(dashboard)/list/teachers/page";
+import React from "react";
+
+type Columns = { header: string; accessor: string; className?: string };
+
+const Table = ({
+  columns,
+  data,
+  renderRow,
+}: {
+  columns: Columns[];
+  data: Teacher[];
+  renderRow: (teacher: Teacher) => React.ReactNode;
+}) => {
+  return (
+    <table className="w-full mt-4">
+      <thead>
+        <tr className="text-left text-gray-500 text-sm">
+          {columns.map((col) => {
+            return (
+              <th key={col.accessor} className={col.className}>
+                {col.header}
+              </th>
+            );
+          })}
+        </tr>
+      </thead>
+      <tbody>{data.map((item) => renderRow(item))}</tbody>
+    </table>
+  );
+};
+
+export default Table;
+
+// ===========================================================
+
+// import React from "react";
+
+// type TableProps = {
+//   columns: { header: string; accessor: string; className?: string }[];
+//   renderRow: (item: any) => React.ReactNode;
+//   data: any[];
+// };
+
+// const Table = ({ columns, renderRow, data }: TableProps) => {
+//   return (
+//     <table className="w-full mt-4">
+//       <thead>
+//         <tr className="text-left text-gray-500 text-sm">
+//           {columns.map((col) => (
+//             <th key={col.accessor} className={col.className}>
+//               {col.header}
+//             </th>
+//           ))}
+//         </tr>
+//       </thead>
+//       <tbody>{data.map((item) => renderRow(item))}</tbody>
+//     </table>
+//   );
+// };
+
+// export default Table;
