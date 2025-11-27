@@ -19,23 +19,25 @@ model Admin {
 }
 
 model Student {
-  id        String   @id
-  username  String   @unique
-  name      String
-  surename  String
-  email     String?
-  phone     String?
-  adress    String
-  img       String?
-  bloodType String
-  sex       UserSex
-  createdAt DateTime @default(now())
-  parentId  String
-  parent    Parent   @relation(fields: [parentId], references: [id])
-  classId   Int
-  class     class    @relation(fields: [classId], references: [id])
-  gradeId   Int
-  grade     Grade    @relation(fields: [gradeId], references: [id])
+  id          String       @id
+  username    String       @unique
+  name        String
+  surename    String
+  email       String?
+  phone       String?
+  adress      String
+  img         String?
+  bloodType   String
+  sex         UserSex
+  createdAt   DateTime     @default(now())
+  parentId    String
+  parent      Parent       @relation(fields: [parentId], references: [id])
+  classId     Int
+  class       class        @relation(fields: [classId], references: [id])
+  gradeId     Int
+  grade       Grade        @relation(fields: [gradeId], references: [id])
+  attendances Attendance[]
+  results     Result[]
 }
 
 model Teacher {
@@ -99,12 +101,60 @@ model Lesson {
   startTime DateTime
   endTime   DateTime
 
-  subjectId Int
-  subject   Subject @relation(fields: [subjectId], references: [id])
-  classId   Int
-  class     class   @relation(fields: [classId], references: [id])
-  teacherId String
-  teacher   Teacher @relation(fields: [teacherId], references: [id])
+  subjectId   Int
+  subject     Subject      @relation(fields: [subjectId], references: [id])
+  classId     Int
+  class       class        @relation(fields: [classId], references: [id])
+  teacherId   String
+  teacher     Teacher      @relation(fields: [teacherId], references: [id])
+  exams       Exam[]
+  assignments Assignment[]
+  attendances Attendance[]
+}
+
+model Exam {
+  id       Int      @id @default(autoincrement())
+  title    String
+  starTime DateTime
+  endTime  DateTime
+
+  lessonId Int
+  lesson   Lesson   @relation(fields: [lessonId], references: [id])
+  results  Result[]
+}
+
+model Assignment {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  starDate DateTime
+  endDate  DateTime
+  lessonId Int
+  lesson   Lesson   @relation(fields: [lessonId], references: [id])
+  results  Result[]
+}
+
+model Result {
+  id    Int @id @default(autoincrement())
+  score Int
+
+  examId       Int
+  exam         Exam       @relation(fields: [examId], references: [id])
+  assignmentId Int
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+  studentId    String
+  student      Student    @relation(fields: [studentId], references: [id])
+}
+
+model Attendance {
+  id      Int      @id @default(autoincrement())
+  date    DateTime
+  present Boolean
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+  lessonId  Int
+  lesson    Lesson  @relation(fields: [lessonId], references: [id])
 }
 
 enum UserSex {
