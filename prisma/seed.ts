@@ -1,5 +1,10 @@
-import { Day, PrismaClient, UserSex } from "@prisma/client";
-const prisma = new PrismaClient();
+import { PrismaClient, Day, UserSex } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   // ADMIN
@@ -21,18 +26,6 @@ async function main() {
     await prisma.grade.create({
       data: {
         level: i,
-      },
-    });
-  }
-
-  // CLASS
-  for (let i = 1; i <= 6; i++) {
-    await prisma.class.create({
-      data: {
-        name: `${i}A`,
-        gradeId: i,
-        capacity: Math.floor(Math.random() * (20 - 15 + 1)) + 15,
-        supervisorId: `teacher${(i % 15) + 1}`,
       },
     });
   }
@@ -69,6 +62,18 @@ async function main() {
         bloodType: "A+",
         sex: i % 2 === 0 ? UserSex.MALE : UserSex.FEMALE,
         Subject: { connect: [{ id: (i % 10) + 1 }] },
+      },
+    });
+  }
+
+  // CLASS
+  for (let i = 1; i <= 6; i++) {
+    await prisma.class.create({
+      data: {
+        name: `${i}A`,
+        gradeId: i,
+        capacity: Math.floor(Math.random() * (20 - 15 + 1)) + 15,
+        supervisorId: `teacher${(i % 15) + 1}`,
       },
     });
   }
