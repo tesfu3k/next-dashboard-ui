@@ -8,7 +8,7 @@ import { Class, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
+type TeacherList = Teacher & { Subject: Subject[] } & { classes: Class[] };
 const columns = [
   {
     header: "Info",
@@ -64,7 +64,9 @@ const renderRow = (item: TeacherList) => (
       </div>
     </td>
     <td className="hidden md:table-cell">{item.username}</td>
-    <td className="hidden md:table-cell">{item.subjects.join(",")}</td>
+    <td className="hidden md:table-cell">
+      {item.Subject.map((s) => s.name).join(",")}
+    </td>
     <td className="hidden md:table-cell">{item.classes.join(",")}</td>
     <td className="hidden md:table-cell">{item.phone}</td>
     <td className="hidden md:table-cell">{item.adress}</td>
@@ -90,7 +92,7 @@ const renderRow = (item: TeacherList) => (
 const TeacherListPage = async () => {
   const data = await prisma.teacher.findMany({
     include: {
-      subjects: true,
+      Subject: true,
       classes: true,
     },
   });
