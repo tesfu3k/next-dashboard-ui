@@ -4,11 +4,12 @@ import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { role, teachersData } from "@/lib/data";
 import prisma from "@/lib/prisma";
+import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Class, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-type TeacherList = Teacher & { Subject: Subject[] } & { classes: Class[] };
+type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 const columns = [
   {
     header: "Info",
@@ -65,9 +66,11 @@ const renderRow = (item: TeacherList) => (
     </td>
     <td className="hidden md:table-cell">{item.username}</td>
     <td className="hidden md:table-cell">
-      {item.Subject.map((s) => s.name).join(",")}
+      {item.subjects.map((s) => s.name).join(",")}
     </td>
-    <td className="hidden md:table-cell">{item.classes.join(",")}</td>
+    <td className="hidden md:table-cell">
+      {item.classes.map((c) => c.name).join(",")}
+    </td>
     <td className="hidden md:table-cell">{item.phone}</td>
     <td className="hidden md:table-cell">{item.adress}</td>
     <td>
@@ -89,14 +92,27 @@ const renderRow = (item: TeacherList) => (
   </tr>
 );
 
-const TeacherListPage = async () => {
+const TeacherListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  const { page, ...queryParams } = searchParams;
+
+  const p = page ? parseInt(page) : 1;
+
   const data = await prisma.teacher.findMany({
     include: {
-      Subject: true,
+      subjects: true,
       classes: true,
     },
+    take: ITEM_PER_PAGE,
+    skip: ITEM_PER_PAGE * (p - 1),
   });
-  console.log(data);
+
+  const count = await prisma.teacher.count();
+
+  console.log("Total teachers:", count);
 
   return (
     <div className="bg-white p-4 rounded-md flex-1 m-4 mt-0">

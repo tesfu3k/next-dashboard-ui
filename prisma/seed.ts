@@ -61,7 +61,7 @@ async function main() {
         adress: `Address${i}`,
         bloodType: "A+",
         sex: i % 2 === 0 ? UserSex.MALE : UserSex.FEMALE,
-        Subject: { connect: [{ id: (i % 10) + 1 }] },
+        subjects: { connect: [{ id: (i % 10) + 1 }] },
       },
     });
   }
