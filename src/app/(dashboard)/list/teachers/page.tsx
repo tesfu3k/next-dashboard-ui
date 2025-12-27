@@ -72,7 +72,7 @@ const renderRow = (item: TeacherList) => (
       {item.classes.map((c) => c.name).join(",")}
     </td>
     <td className="hidden md:table-cell">{item.phone}</td>
-    <td className="hidden md:table-cell">{item.adress}</td>
+    <td className="hidden md:table-cell">{item.address}</td>
     <td>
       <div className="flex items-center gap-2">
         <Link href={`/list/teachers/${item.id}`}>

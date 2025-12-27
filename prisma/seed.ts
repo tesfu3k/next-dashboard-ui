@@ -7,6 +7,9 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
+  // Wipe existing data for idempotent seeding (resets identity counters too)
+  await prisma.$executeRaw`TRUNCATE TABLE "Announcement", "Attendance", "Result", "Assignment", "Exam", "Lesson", "class", "Subject", "Student", "Parent", "Teacher", "Grade", "Admin", "Event" RESTART IDENTITY CASCADE`;
+
   // ADMIN
   await prisma.admin.create({
     data: {
@@ -58,7 +61,7 @@ async function main() {
         surename: `TSurname${i}`,
         email: `teacher${i}@example.com`,
         phone: `123-456-789${i}`,
-        adress: `Address${i}`,
+        address: `Address${i}`,
         bloodType: "A+",
         sex: i % 2 === 0 ? UserSex.MALE : UserSex.FEMALE,
         subjects: { connect: [{ id: (i % 10) + 1 }] },
@@ -107,7 +110,7 @@ async function main() {
         surename: `PSurname ${i}`,
         email: `parent${i}@example.com`,
         phone: `123-456-789${i}`,
-        adress: `Address${i}`,
+        address: `Address${i}`,
       },
     });
   }
@@ -122,7 +125,7 @@ async function main() {
         surename: `SSurname ${i}`,
         email: `student${i}@example.com`,
         phone: `987-654-321${i}`,
-        adress: `Address${i}`,
+        address: `Address${i}`,
         bloodType: "O-",
         sex: i % 2 === 0 ? UserSex.MALE : UserSex.FEMALE,
         parentId: `parentId${Math.ceil(i / 2) % 25 || 25}`,
