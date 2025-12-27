@@ -101,16 +101,18 @@ const TeacherListPage = async ({
 
   const p = page ? parseInt(page) : 1;
 
-  const data = await prisma.teacher.findMany({
-    include: {
-      subjects: true,
-      classes: true,
-    },
-    take: ITEM_PER_PAGE,
-    skip: ITEM_PER_PAGE * (p - 1),
-  });
+  const [data, count] = await prisma.$transaction([
+    prisma.teacher.findMany({
+      include: {
+        subjects: true,
+        classes: true,
+      },
+      take: ITEM_PER_PAGE,
+      skip: ITEM_PER_PAGE * (p - 1),
+    }),
 
-  const count = await prisma.teacher.count();
+    prisma.teacher.count(),
+  ]);
 
   console.log("Total teachers:", count);
 
@@ -158,7 +160,7 @@ const TeacherListPage = async ({
       {/* Lists */}
       <Table columns={columns} renderRow={renderRow} data={data} />
       {/* Pagination */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };
