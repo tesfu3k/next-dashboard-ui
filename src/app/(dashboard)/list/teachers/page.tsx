@@ -105,7 +105,7 @@ const TeacherListPage = async ({
 
   const query: Prisma.TeacherWhereInput = {};
 
-  if (queryParams.classId) {
+  if (queryParams) {
     for (const [key, value] of Object.entries(queryParams)) {
       if (value !== undefined) {
         switch (key) {
