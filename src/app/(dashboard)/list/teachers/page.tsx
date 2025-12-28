@@ -8,6 +8,7 @@ import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { de } from "zod/locales";
 
 type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 const columns = [
@@ -121,6 +122,8 @@ const TeacherListPage = async ({
               contains: value,
               mode: "insensitive",
             };
+            break;
+          default:
             break;
         }
       }
