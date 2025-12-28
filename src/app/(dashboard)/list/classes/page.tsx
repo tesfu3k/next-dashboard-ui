@@ -8,6 +8,7 @@ import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Class, Prisma, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { de } from "zod/locales";
 
 type ClassList = Class & { supervisor: Teacher };
 
@@ -87,6 +88,8 @@ const ClassListPage = async ({
               contains: value,
               mode: "insensitive",
             };
+            break;
+          default:
             break;
         }
       }

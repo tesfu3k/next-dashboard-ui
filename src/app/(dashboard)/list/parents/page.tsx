@@ -8,6 +8,7 @@ import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Parent, Prisma, Student } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { de } from "zod/locales";
 
 type ParentList = Parent & { students: Student[] };
 
@@ -88,6 +89,8 @@ const ParentListPage = async ({
               contains: value,
               mode: "insensitive",
             };
+            break;
+          default:
             break;
         }
       }
