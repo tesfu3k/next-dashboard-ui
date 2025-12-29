@@ -53,7 +53,7 @@ const renderRow = (item: ExamList) => (
       {item.lesson.teacher.name + " " + item.lesson.teacher.surename}
     </td>
     <td className="hidden md:table-cell">
-      {new Intl.DateTimeFormat("en-US").format(item.starTime)}
+      {new Intl.DateTimeFormat("en-US").format(item.startTime)}
     </td>
 
     <td>

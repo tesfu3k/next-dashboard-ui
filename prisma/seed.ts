@@ -140,7 +140,7 @@ async function main() {
     await prisma.exam.create({
       data: {
         title: `Exam ${i}`,
-        starTime: new Date(new Date().setHours(new Date().getHours() + 1)),
+        startTime: new Date(new Date().setHours(new Date().getHours() + 1)),
         endTime: new Date(new Date().setHours(new Date().getHours() + 2)),
         lessonId: (i % 30) + 1,
       },
@@ -188,8 +188,8 @@ async function main() {
     await prisma.event.create({
       data: {
         title: `Event ${i}`,
-        discription: `Description for Event ${i}`,
-        srartTime: new Date(new Date().setHours(new Date().getHours() + 1)),
+        description: `Description for Event ${i}`,
+        startTime: new Date(new Date().setHours(new Date().getHours() + 1)),
         endTime: new Date(new Date().setHours(new Date().getHours() + 2)),
         classId: (i % 5) + 1,
       },
@@ -201,7 +201,7 @@ async function main() {
     await prisma.announcement.create({
       data: {
         title: `Announcement ${i}`,
-        discription: `Description for Announcement ${i}`,
+        description: `Description for Announcement ${i}`,
         date: new Date(),
         classId: (i % 5) + 1,
       },

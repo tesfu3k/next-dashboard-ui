@@ -119,10 +119,10 @@ model Lesson {
 }
 
 model Exam {
-  id       Int      @id @default(autoincrement())
-  title    String
-  starTime DateTime
-  endTime  DateTime
+  id        Int      @id @default(autoincrement())
+  title     String
+  startTime DateTime
+  endTime   DateTime
 
   lessonId Int
   lesson   Lesson   @relation(fields: [lessonId], references: [id])
@@ -166,8 +166,8 @@ model Attendance {
 model Event {
   id          Int      @id @default(autoincrement())
   title       String
-  discription String
-  srartTime   DateTime
+  description String
+  startTime   DateTime
   endTime     DateTime
   classId     Int?
   class       Class?   @relation(fields: [classId], references: [id])
@@ -176,7 +176,7 @@ model Event {
 model Announcement {
   id          Int      @id @default(autoincrement())
   title       String
-  discription String
+  description String
   date        DateTime
 
   classId Int?
