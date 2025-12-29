@@ -162,7 +162,7 @@ const ResultListPage = async ({
     const assessment = item.exam || item.assignment;
     if (!assessment) return null;
 
-    const isExam = "exam" in assessment;
+    const isExam = "startTime" in assessment;
     return {
       id: item.id,
       title: assessment.title,
