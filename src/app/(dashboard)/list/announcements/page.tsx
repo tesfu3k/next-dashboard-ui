@@ -85,7 +85,7 @@ const AnnouncementListPage = async ({
       }
     }
   }
-
+  // await new Promise((resolve) => setTimeout(resolve, 50000)); // Simulate delay
   const [data, count] = await prisma.$transaction([
     prisma.announcement.findMany({
       where: query,
