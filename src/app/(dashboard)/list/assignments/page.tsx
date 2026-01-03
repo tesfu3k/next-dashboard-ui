@@ -2,12 +2,21 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role, assignmentsData } from "@/lib/data";
+
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
-import { Assignment, Class, Prisma, Subject, Teacher } from "@prisma/client";
+import { auth } from "@clerk/nextjs/server";
+import {
+  Assignment,
+  Class,
+  Prisma,
+  Subject,
+  Teacher,
+} from "@/lib/generated/prisma/client";
 import Image from "next/image";
-import Link from "next/link";
+
+const { sessionClaims } = auth();
+const role = (sessionClaims?.metadata as { role?: string })?.role;
 
 type AssignmentList = Assignment & {
   lesson: {
