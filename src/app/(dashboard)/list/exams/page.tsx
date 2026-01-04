@@ -182,7 +182,9 @@ const ExamListPage = async ({
                 height={14}
               />
             </button>
-            {role === "admin" && <FormModal table="result" type="update" />}
+            {(role === "admin" || role === "teacher") && (
+              <FormModal table="result" type="update" />
+            )}
           </div>
         </div>
       </div>
