@@ -6,11 +6,8 @@ import TableSearch from "@/components/TableSearch";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Announcement, Class, Prisma } from "@/lib/generated/prisma/client";
-import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
-
-const { sessionClaims } = auth();
-const role = (sessionClaims?.metadata as { role?: string })?.role;
+import { role } from "@/lib/utils";
 
 type AnnouncementList = Announcement & { class: Class };
 
