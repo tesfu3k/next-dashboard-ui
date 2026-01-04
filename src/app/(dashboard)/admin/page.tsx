@@ -15,7 +15,7 @@ const AdminPage = () => {
           <UserCard type="student" />
           <UserCard type="teacher" />
           <UserCard type="parent" />
-          <UserCard type="staff" />
+          <UserCard type="admin" />
         </div>
         {/* Middle Chart */}
         <div className="flex gap-4 flex-col lg:flex-row">
