@@ -22,7 +22,7 @@ const AttendanceChartContainer = async () => {
     },
   });
 
-  // console.log(data);
+  console.log(ResData);
 
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri"];
   const attendanceMap: { [key: string]: { present: number; absent: number } } =
@@ -48,7 +48,7 @@ const AttendanceChartContainer = async () => {
   });
 
   const data = daysOfWeek.map((day) => ({
-    day,
+    name: day,
     present: attendanceMap[day].present,
     absent: attendanceMap[day].absent,
   }));

@@ -1,4 +1,4 @@
-import { PrismaClient, Day, UserSex } from "@prisma/client";
+import { PrismaClient, Day, UserSex } from "../src/lib/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
