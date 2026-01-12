@@ -172,15 +172,27 @@ async function main() {
   }
 
   // ATTENDANCE
-  for (let i = 1; i <= 10; i++) {
-    await prisma.attendance.create({
-      data: {
-        date: new Date(),
-        present: true,
-        studentId: `student${i}`,
-        lessonId: (i % 30) + 1,
-      },
-    });
+  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+  const today = new Date();
+  const currentDayOfWeek = today.getDay(); // 0=Sun, 1=Mon, etc.
+  const daysSinceMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
+  const lastMonday = new Date(today);
+  lastMonday.setDate(today.getDate() - daysSinceMonday);
+
+  for (let dayOffset = 0; dayOffset < 5; dayOffset++) {
+    const date = new Date(lastMonday);
+    date.setDate(lastMonday.getDate() + dayOffset);
+    for (let studentId = 1; studentId <= 20; studentId++) { // More students per day
+      const present = Math.random() > 0.2; // 80% present, 20% absent
+      await prisma.attendance.create({
+        data: {
+          date: date,
+          present: present,
+          studentId: `student${studentId}`,
+          lessonId: (studentId % 30) + 1,
+        },
+      });
+    }
   }
 
   // EVENT
