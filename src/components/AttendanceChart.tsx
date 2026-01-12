@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import {
   BarChart,
   Bar,
@@ -29,7 +29,7 @@ const AttendanceChart = ({
         />
         <YAxis axisLine={false} tick={{ fill: "#d1d5db" }} tickLine={false} />
         <Tooltip
-          contentStyle={{ borderRadius: "10px", borderColor: "lightgrey" }}
+          contentStyle={{ borderRadius: "10px", borderColor: "lightgray" }}
         />
         <Legend
           align="left"
@@ -37,13 +37,13 @@ const AttendanceChart = ({
           wrapperStyle={{ paddingTop: "20px", paddingBottom: "40px" }}
         />
         <Bar
-          dataKey="absent"
+          dataKey="present"
           fill="#FAE27C"
           legendType="circle"
           radius={[10, 10, 0, 0]}
         />
         <Bar
-          dataKey="present"
+          dataKey="absent"
           fill="#C3EBFA"
           legendType="circle"
           radius={[10, 10, 0, 0]}
